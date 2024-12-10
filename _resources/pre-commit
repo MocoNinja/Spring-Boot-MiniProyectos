@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ mvn -f ./spring-boot-hello-mqtt/pom.xml spotless:apply

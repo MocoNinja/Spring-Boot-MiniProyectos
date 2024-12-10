@@ -24,10 +24,9 @@ public class SickPatientConsumerConfig {
   private String topic;
 
   @Autowired
-  public SickPatientConsumerConfig(@Qualifier("sickPatientDataHandler")PatientHandler handler) {
+  public SickPatientConsumerConfig(@Qualifier("sickPatientDataHandler") PatientHandler handler) {
     this.handler = handler;
   }
-
 
   @Bean
   public MessageProducer mqttProducerSickPatient(

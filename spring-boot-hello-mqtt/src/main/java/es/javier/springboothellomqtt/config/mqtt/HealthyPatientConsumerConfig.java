@@ -23,11 +23,10 @@ public class HealthyPatientConsumerConfig {
   private String topic;
 
   @Autowired
-  public HealthyPatientConsumerConfig(@Qualifier("healthyPatientDataHandler")PatientHandler handler) {
+  public HealthyPatientConsumerConfig(
+      @Qualifier("healthyPatientDataHandler") PatientHandler handler) {
     this.handler = handler;
   }
-
-
 
   @Bean
   public MessageProducer mqttProducerHealthyPatient(

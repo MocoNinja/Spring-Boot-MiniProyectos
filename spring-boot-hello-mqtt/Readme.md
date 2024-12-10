@@ -21,5 +21,5 @@ In resources, a *nodered* flow is attached. It is a little hardcoded to my mosqu
 
 - MQTT
 - PROFILES
-- DEPENDENCY INJECTION
 - CUSTOM CONFIGURATION
+- JPA
