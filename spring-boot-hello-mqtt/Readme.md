@@ -3,9 +3,10 @@
 ## Setup
 
 Credentials are meant to be read from an .env file in the source of the project with these values:
-
+```txt
 mqtt_username=<fillme>
 mqtt_password=<fillme>
+```
 
 ## Data
 
