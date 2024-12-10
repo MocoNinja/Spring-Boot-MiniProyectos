@@ -1,0 +1,218 @@
+[
+    {
+        "id": "c1631bb886e5520d",
+        "type": "tab",
+        "label": "Flujo 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "611ceeb000f331a2",
+        "type": "inject",
+        "z": "c1631bb886e5520d",
+        "name": "Simular sensores",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "test",
+        "x": 240,
+        "y": 320,
+        "wires": [
+            [
+                "5082d7c4ee8ec76e",
+                "3eb47121deaf288e"
+            ]
+        ]
+    },
+    {
+        "id": "06da56a31a2c29ab",
+        "type": "mqtt out",
+        "z": "c1631bb886e5520d",
+        "name": "Paciente Sano",
+        "topic": "healthy_patient",
+        "qos": "1",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "4fb2e17037862f7d",
+        "x": 680,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "25b6ecd3fd27ad2b",
+        "type": "mqtt in",
+        "z": "c1631bb886e5520d",
+        "name": "READ PACIENTE SANO",
+        "topic": "healthy_patient",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "4fb2e17037862f7d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 560,
+        "wires": [
+            [
+                "e658061239907905"
+            ]
+        ]
+    },
+    {
+        "id": "e658061239907905",
+        "type": "debug",
+        "z": "c1631bb886e5520d",
+        "name": "LOG",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 440,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "5082d7c4ee8ec76e",
+        "type": "function",
+        "z": "c1631bb886e5520d",
+        "name": "Simular temperatura",
+        "func": "const maxTemp = 37;\nconst minTemp = 36;\nconst randomInteger = Math.floor(Math.random() * (maxTemp - minTemp + 1) + minTemp);\nconst randomDecimal = `${Math.random()}`.split(\".\")[1].substring(0,2);\n\nreturn  {\n    \"payload\": `${randomInteger}.${randomDecimal}`\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 240,
+        "wires": [
+            [
+                "06da56a31a2c29ab"
+            ]
+        ]
+    },
+    {
+        "id": "bff19f641e4163ec",
+        "type": "mqtt out",
+        "z": "c1631bb886e5520d",
+        "name": "Paciente enfermo",
+        "topic": "sick_patient",
+        "qos": "1",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "4fb2e17037862f7d",
+        "x": 670,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "6f6270f56cc3f18c",
+        "type": "mqtt in",
+        "z": "c1631bb886e5520d",
+        "name": "READ PACIENTE ENFERMO",
+        "topic": "sick_patient",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "4fb2e17037862f7d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 640,
+        "wires": [
+            [
+                "ebf143ebd3b703d6"
+            ]
+        ]
+    },
+    {
+        "id": "ebf143ebd3b703d6",
+        "type": "debug",
+        "z": "c1631bb886e5520d",
+        "name": "LOG",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 440,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "3eb47121deaf288e",
+        "type": "function",
+        "z": "c1631bb886e5520d",
+        "name": "Simular temperatura",
+        "func": "const maxTemp = 39;\nconst minTemp = 38;\nconst randomInteger = Math.floor(Math.random() * (maxTemp - minTemp + 1) + minTemp);\nconst randomDecimal = `${Math.random()}`.split(\".\")[1].substring(0, 2);\n\nreturn {\n    \"payload\": `${randomInteger}.${randomDecimal}`\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 400,
+        "wires": [
+            [
+                "bff19f641e4163ec"
+            ]
+        ]
+    },
+    {
+        "id": "4fb2e17037862f7d",
+        "type": "mqtt-broker",
+        "name": "Mosquitto",
+        "broker": "host.docker.internal",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
