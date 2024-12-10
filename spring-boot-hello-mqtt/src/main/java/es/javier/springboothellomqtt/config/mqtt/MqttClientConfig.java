@@ -1,4 +1,4 @@
-package es.javier.springboothellomqtt.config;
+package es.javier.springboothellomqtt.config.mqtt;
 
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Value;

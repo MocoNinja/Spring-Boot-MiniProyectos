@@ -1,6 +1,8 @@
-package es.javier.springboothellomqtt.repository;
+package es.javier.springboothellomqtt.repository.in_memory;
 
 import es.javier.springboothellomqtt.model.TemperatureMeasurement;
+import es.javier.springboothellomqtt.repository.PatientRepository;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.time.Clock;
@@ -9,13 +11,14 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Repository
-public class InMemorySickPatientRepository implements  PatientRepository{
+@Profile("!sqlite")
+public class InMemoryHealthyPatientRepository implements PatientRepository {
     private final ConcurrentLinkedQueue<TemperatureMeasurement> database = new ConcurrentLinkedQueue<>();
 
 
     @Override
     public void saveTemperature(float temperature) {
-        database.add(new TemperatureMeasurement(temperature, Instant.now(Clock.systemUTC())));
+            database.add(new TemperatureMeasurement(temperature, Instant.now(Clock.systemUTC())));
     }
 
     @Override

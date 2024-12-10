@@ -1,7 +1,6 @@
-package es.javier.springboothellomqtt.config;
+package es.javier.springboothellomqtt.config.mqtt;
 
 import es.javier.springboothellomqtt.handler.PatientHandler;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,22 +15,22 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 
 @Configuration
-public class SickPatientConsumerConfig {
-  private static final String CLIENT_ID = "spring-boot-client-sick-consumer";
-
+public class HealthyPatientConsumerConfig {
+  private static final String CLIENT_ID = "spring-boot-client-healthy-consumer";
   private final PatientHandler handler;
 
-  @Value("${mqtt.topic.sick}")
+  @Value("${mqtt.topic.healthy}")
   private String topic;
 
   @Autowired
-  public SickPatientConsumerConfig(@Qualifier("sickPatientDataHandler")PatientHandler handler) {
+  public HealthyPatientConsumerConfig(@Qualifier("healthyPatientDataHandler")PatientHandler handler) {
     this.handler = handler;
   }
 
 
+
   @Bean
-  public MessageProducer mqttProducerSickPatient(
+  public MessageProducer mqttProducerHealthyPatient(
       @Qualifier("mqttClientFactory") MqttPahoClientFactory factory,
       @Qualifier("inputMqttChannel") MessageChannel channel) {
     MqttPahoMessageDrivenChannelAdapter adapter =
@@ -42,7 +41,7 @@ public class SickPatientConsumerConfig {
 
   @Bean
   @ServiceActivator(inputChannel = "inputMqttChannel")
-  public MessageHandler sickPatientHandler() {
+  public MessageHandler healthyPatientHandler() {
     return msg -> {
       // TODO: converter y demás
       Message<String> parsedMsg = (Message<String>) msg;

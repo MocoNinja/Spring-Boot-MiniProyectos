@@ -11,3 +11,15 @@ mqtt_password=<fillme>
 ## Data
 
 In resources, a *nodered* flow is attached. It is a little hardcoded to my mosquitto installation for now.
+
+## References
+
+- [Database Config](https://docs.spring.io/spring-data/jpa/reference/repositories/create-instances.html)
+- [MQTT] (https://docs.spring.io/spring-integration/reference/mqtt.html)
+
+## Learning tags
+
+- MQTT
+- PROFILES
+- DEPENDENCY INJECTION
+- CUSTOM CONFIGURATION

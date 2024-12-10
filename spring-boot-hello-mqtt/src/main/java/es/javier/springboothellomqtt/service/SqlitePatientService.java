@@ -10,15 +10,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@Profile("!sqlite")
-public class InMemoryPatientService implements PatientService {
+@Profile("sqlite")
+public class SqlitePatientService implements PatientService {
     private final PatientRepository healthypatientRepository;
     private final PatientRepository sickpatientRepository;
 
     @Autowired
-    public InMemoryPatientService(
-            final @Qualifier("inMemoryHealthyPatientRepository") PatientRepository healthypatientRepository,
-            final @Qualifier("inMemorySickPatientRepository") PatientRepository sickpatientRepository) {
+    public SqlitePatientService(
+            final @Qualifier("sqliteHealthyPatientRepository") PatientRepository healthypatientRepository,
+            final @Qualifier("sqliteSickPatientRepository") PatientRepository sickpatientRepository) {
         this.healthypatientRepository = healthypatientRepository;
         this.sickpatientRepository = sickpatientRepository;
     }
