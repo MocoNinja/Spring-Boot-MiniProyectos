@@ -1,6 +1,7 @@
 package es.javier.springboothellomqtt.config.mqtt;
 
 import es.javier.springboothellomqtt.handler.PatientHandler;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,7 +41,8 @@ public class HealthyPatientConsumerConfig {
       @Qualifier("mqttClientFactory") MqttPahoClientFactory factory,
       @Qualifier("inputMqttChannel") MessageChannel channel) {
     MqttPahoMessageDrivenChannelAdapter adapter =
-        new MqttPahoMessageDrivenChannelAdapter(id, factory, topic);
+        new MqttPahoMessageDrivenChannelAdapter(
+            id.concat("_").concat(UUID.randomUUID().toString()), factory, topic);
     adapter.setQos(qos);
     adapter.setOutputChannel(channel);
     return adapter;
