@@ -38,8 +38,8 @@
         "z": "c1631bb886e5520d",
         "name": "Paciente Sano",
         "topic": "healthy_patient",
-        "qos": "1",
-        "retain": "true",
+        "qos": "2",
+        "retain": "false",
         "respTopic": "",
         "contentType": "",
         "userProps": "",
@@ -49,27 +49,6 @@
         "x": 680,
         "y": 240,
         "wires": []
-    },
-    {
-        "id": "25b6ecd3fd27ad2b",
-        "type": "mqtt in",
-        "z": "c1631bb886e5520d",
-        "name": "READ PACIENTE SANO",
-        "topic": "healthy_patient",
-        "qos": "0",
-        "datatype": "auto-detect",
-        "broker": "4fb2e17037862f7d",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 130,
-        "y": 560,
-        "wires": [
-            [
-                "e658061239907905"
-            ]
-        ]
     },
     {
         "id": "e658061239907905",
@@ -84,8 +63,8 @@
         "targetType": "full",
         "statusVal": "payload",
         "statusType": "auto",
-        "x": 440,
-        "y": 560,
+        "x": 660,
+        "y": 80,
         "wires": []
     },
     {
@@ -104,7 +83,8 @@
         "y": 240,
         "wires": [
             [
-                "06da56a31a2c29ab"
+                "06da56a31a2c29ab",
+                "e658061239907905"
             ]
         ]
     },
@@ -114,8 +94,8 @@
         "z": "c1631bb886e5520d",
         "name": "Paciente enfermo",
         "topic": "sick_patient",
-        "qos": "1",
-        "retain": "true",
+        "qos": "2",
+        "retain": "false",
         "respTopic": "",
         "contentType": "",
         "userProps": "",
@@ -125,27 +105,6 @@
         "x": 670,
         "y": 400,
         "wires": []
-    },
-    {
-        "id": "6f6270f56cc3f18c",
-        "type": "mqtt in",
-        "z": "c1631bb886e5520d",
-        "name": "READ PACIENTE ENFERMO",
-        "topic": "sick_patient",
-        "qos": "0",
-        "datatype": "auto-detect",
-        "broker": "4fb2e17037862f7d",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 140,
-        "y": 640,
-        "wires": [
-            [
-                "ebf143ebd3b703d6"
-            ]
-        ]
     },
     {
         "id": "ebf143ebd3b703d6",
@@ -160,8 +119,8 @@
         "targetType": "full",
         "statusVal": "payload",
         "statusType": "auto",
-        "x": 440,
-        "y": 640,
+        "x": 620,
+        "y": 580,
         "wires": []
     },
     {
@@ -180,7 +139,8 @@
         "y": 400,
         "wires": [
             [
-                "bff19f641e4163ec"
+                "bff19f641e4163ec",
+                "ebf143ebd3b703d6"
             ]
         ]
     },

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.core.MessageProducer;
 import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
@@ -15,13 +16,18 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 
 @Configuration
+@PropertySource("classpath:mqtt/sick_patient.properties")
 public class SickPatientConsumerConfig {
-  private static final String CLIENT_ID = "spring-boot-client-sick-consumer";
-
   private final PatientHandler handler;
 
-  @Value("${mqtt.topic.sick}")
+  @Value("${mqtt.sick.id}")
+  private String id;
+
+  @Value("${mqtt.sick.topic}")
   private String topic;
+
+  @Value("${mqtt.sick.qos}")
+  private int qos;
 
   @Autowired
   public SickPatientConsumerConfig(@Qualifier("sickPatientDataHandler") PatientHandler handler) {
@@ -33,8 +39,9 @@ public class SickPatientConsumerConfig {
       @Qualifier("mqttClientFactory") MqttPahoClientFactory factory,
       @Qualifier("inputMqttChannel") MessageChannel channel) {
     MqttPahoMessageDrivenChannelAdapter adapter =
-        new MqttPahoMessageDrivenChannelAdapter(CLIENT_ID, factory, topic);
+        new MqttPahoMessageDrivenChannelAdapter(id, factory, topic);
     adapter.setOutputChannel(channel);
+    adapter.setQos(qos);
     return adapter;
   }
 

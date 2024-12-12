@@ -4,12 +4,14 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
 import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 import org.springframework.messaging.MessageChannel;
 
 @Configuration
+@PropertySource("classpath:mqtt/mqtt.properties")
 public class MqttClientConfig {
 
   @Value("${mqtt.protocol}")
@@ -27,6 +29,9 @@ public class MqttClientConfig {
   @Value("${mqtt.password}")
   private String password;
 
+  @Value("${mqtt.clean_session}")
+  private boolean cleanSession;
+
   @Bean
   public MqttConnectOptions mqttConnectOptions() {
     MqttConnectOptions options = new MqttConnectOptions();
@@ -34,6 +39,7 @@ public class MqttClientConfig {
     options.setCleanSession(true);
     options.setUserName(username);
     options.setPassword(password.toCharArray());
+    options.setCleanSession(cleanSession);
     return options;
   }
 

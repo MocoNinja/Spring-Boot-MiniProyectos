@@ -1,6 +1,6 @@
 package es.javier.springboothellomqtt.service;
 
-import es.javier.springboothellomqtt.model.TemperatureMeasurement;
+import es.javier.springboothellomqtt.model.dto.TemperatureMeasurementDto;
 import java.util.List;
 
 public interface PatientService {
@@ -8,7 +8,7 @@ public interface PatientService {
 
   void saveSickPatientTemperature(float temperature);
 
-  List<TemperatureMeasurement> getAllHealthyPatientTemperatures();
+  List<TemperatureMeasurementDto> getAllHealthyPatientTemperatures();
 
-  List<TemperatureMeasurement> getAllSickPatientTemperatures();
+  List<TemperatureMeasurementDto> getAllSickPatientTemperatures();
 }

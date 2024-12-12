@@ -1,6 +1,6 @@
 package es.javier.springboothellomqtt.rest;
 
-import es.javier.springboothellomqtt.model.TemperatureMeasurement;
+import es.javier.springboothellomqtt.model.dto.TemperatureMeasurementDto;
 import es.javier.springboothellomqtt.service.PatientService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +20,12 @@ public class PatientController {
   }
 
   @GetMapping("/healthy")
-  public ResponseEntity<List<TemperatureMeasurement>> getDataForHealthyPatients() {
+  public ResponseEntity<List<TemperatureMeasurementDto>> getDataForHealthyPatients() {
     return ResponseEntity.ok(patientService.getAllHealthyPatientTemperatures());
   }
 
   @GetMapping("/sick")
-  public ResponseEntity<List<TemperatureMeasurement>> getDataForSickPatients() {
+  public ResponseEntity<List<TemperatureMeasurementDto>> getDataForSickPatients() {
     return ResponseEntity.ok(patientService.getAllSickPatientTemperatures());
   }
 }

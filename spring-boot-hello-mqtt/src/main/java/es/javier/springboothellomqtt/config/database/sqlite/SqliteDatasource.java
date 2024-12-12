@@ -1,6 +1,9 @@
 package es.javier.springboothellomqtt.config.database.sqlite;
 
+import static es.javier.springboothellomqtt.constants.Profiles.SQLITE_PROFILE;
+
 import jakarta.persistence.EntityManagerFactory;
+import java.util.Properties;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -16,9 +19,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@Profile("sqlite")
-@PropertySource("classpath:sqlite.properties")
-@EnableJpaRepositories
+@Profile(SQLITE_PROFILE)
+@PropertySource({"classpath:database/sqlite/sqlite.properties", "classpath:application.properties"})
+@EnableJpaRepositories(basePackages = "es.javier.springboothellomqtt.repository.jpa")
 @EnableTransactionManagement
 public class SqliteDatasource {
 
@@ -27,6 +30,15 @@ public class SqliteDatasource {
 
   @Value("${sqlite.driverClassName}")
   private String driverClassName;
+
+  @Value("${spring.jpa.hibernate.ddl-auto}")
+  private String ddlAuto;
+
+  @Value("${spring.jpa.show-sql}")
+  private String showSql;
+
+  @Value("${spring.jpa.database-platform}")
+  private String databasePlatform;
 
   @Value("${sqlite.username}")
   private String username;
@@ -46,22 +58,31 @@ public class SqliteDatasource {
   }
 
   @Bean
-  public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+  Properties jpaProperties() {
+    final Properties jpaProperties = new Properties();
+    jpaProperties.put("hibernate.dialect", databasePlatform);
+    jpaProperties.put("hibernate.hbm2ddl.auto", ddlAuto);
+    jpaProperties.put("hibernate.show_sql", showSql);
+    return jpaProperties;
+  }
 
-    HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+  @Bean
+  public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
     vendorAdapter.setGenerateDdl(true);
 
     LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
     factory.setJpaVendorAdapter(vendorAdapter);
     factory.setPackagesToScan("es.javier.springboothellomqtt.model.entity");
     factory.setDataSource(dataSource());
+    factory.setJpaProperties(jpaProperties());
+
     return factory;
   }
 
   @Bean
   public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-
-    JpaTransactionManager txManager = new JpaTransactionManager();
+    final JpaTransactionManager txManager = new JpaTransactionManager();
     txManager.setEntityManagerFactory(entityManagerFactory);
     return txManager;
   }
