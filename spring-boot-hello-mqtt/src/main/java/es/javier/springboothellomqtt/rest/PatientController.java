@@ -1,5 +1,6 @@
 package es.javier.springboothellomqtt.rest;
 
+import es.javier.springboothellomqtt.exception.MissingDataException;
 import es.javier.springboothellomqtt.model.dto.TemperatureMeasurementDto;
 import es.javier.springboothellomqtt.service.PatientService;
 import java.util.List;
@@ -24,8 +25,20 @@ public class PatientController {
     return ResponseEntity.ok(patientService.getAllHealthyPatientTemperatures());
   }
 
+  @GetMapping("/healthy/latest")
+  public ResponseEntity<TemperatureMeasurementDto> getLatestDataForHealthyPatients()
+      throws MissingDataException {
+    return ResponseEntity.ok(patientService.getLatestHealthyPatientTemperature());
+  }
+
   @GetMapping("/sick")
   public ResponseEntity<List<TemperatureMeasurementDto>> getDataForSickPatients() {
     return ResponseEntity.ok(patientService.getAllSickPatientTemperatures());
+  }
+
+  @GetMapping("/sick/latest")
+  public ResponseEntity<TemperatureMeasurementDto> getLatestDataForSickPatients()
+      throws MissingDataException {
+    return ResponseEntity.ok(patientService.getLatestSickPatientTemperature());
   }
 }

@@ -11,6 +11,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
@@ -27,6 +28,13 @@ public class SqliteSickPatientRepository implements PatientRepository {
       final SickPatientRepositoryJpaHelper sickPatientRepositoryJpaHelper) {
     this.entityManager = entityManager;
     this.sickPatientRepositoryJpaHelper = sickPatientRepositoryJpaHelper;
+  }
+
+  @Override
+  public Optional<TemperatureMeasurementEntity> getLastTemperatureMeasurement() {
+    return this.sickPatientRepositoryJpaHelper
+        .findLatestRecord()
+        .map(maybeRecord -> Optional.ofNullable(maybeRecord).orElse(null));
   }
 
   @Override

@@ -6,15 +6,21 @@ import es.javier.springboothellomqtt.model.entity.HealthyTemperatureMeasurementE
 import es.javier.springboothellomqtt.model.entity.TemperatureMeasurementEntity;
 import es.javier.springboothellomqtt.repository.PatientRepository;
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @Profile(MEMORY_PROFILE)
 public class InMemoryHealthyPatientRepository implements PatientRepository {
-  private final ConcurrentLinkedQueue<TemperatureMeasurementEntity> database =
-      new ConcurrentLinkedQueue<>();
+  private final ConcurrentLinkedDeque<TemperatureMeasurementEntity> database =
+      new ConcurrentLinkedDeque<>();
+
+  @Override
+  public Optional<TemperatureMeasurementEntity> getLastTemperatureMeasurement() {
+    return Optional.ofNullable(database.getLast());
+  }
 
   @Override
   public void saveTemperature(float temperature) {
